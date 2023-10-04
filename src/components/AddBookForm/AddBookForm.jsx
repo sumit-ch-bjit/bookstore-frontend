@@ -1,110 +1,134 @@
-// AddBookForm.js
+import { useForm, Controller } from "react-hook-form";
+import useBook from "../../hooks/useBooks";
 
-import React from "react";
-import useBookForm from "../../hooks/useBookForm"; // Adjust the path based on your project structure
-import "./AddBookForm.styles.scss"; // Import the styles
+const AddBookForm = () => {
+  const {
+    handleSubmit,
+    reset,
+    control,
+    formState: { errors },
+  } = useForm({
+    mode: onchange,
+    defaultValues: {
+      title: "",
+      author: "",
+      genre: "",
+      price: "",
+      stock: "",
+    },
+  });
 
-const AddBookForm = ({ onAddBook }) => {
-  const { formData, handleChange, handleSubmit } = useBookForm(onAddBook);
+  const { postBook } = useBook();
+
+  const handleAddBook = async (formData) => {
+    try {
+      const res = await postBook(formData);
+
+      console.log("book added ", res);
+    } catch (error) {
+      console.log("error posting books", error);
+    }
+  };
 
   return (
-    <div className="add-book-form">
-      <h2>Add a New Book</h2>
-      <form onSubmit={handleSubmit}>
-        <div className="form-group">
-          <label>Title</label>
-          <input
-            type="text"
+    <div>
+      <h2 style={{ display: "flex", justifyContent: "center" }}>
+        Add a new book
+      </h2>
+      <form onSubmit={handleSubmit((data) => handleAddBook(data))}>
+        <div>
+          <h3>Title: </h3>
+          <Controller
+            control={control}
             name="title"
-            value={formData.title}
-            onChange={handleChange}
+            rules={{
+              required: "Title is required",
+            }}
+            render={({ field }) => (
+              <input
+                placeholder="Enter a Title"
+                {...field}
+                style={{ border: errors.title ? "1px solid red" : "" }}
+              />
+            )}
           />
+          {errors.title && <h5>{errors.title.message}</h5>}
         </div>
-
-        <div className="form-group">
-          <label>Author</label>
-          <input
-            type="text"
+        <div>
+          <h3>Author: </h3>
+          <Controller
+            control={control}
             name="author"
-            value={formData.author}
-            onChange={handleChange}
+            rules={{
+              required: "author is required",
+            }}
+            render={({ field }) => (
+              <input
+                placeholder="Enter an author"
+                {...field}
+                style={{ border: errors.author ? "1px solid red" : "" }}
+              />
+            )}
           />
+          {errors.author && <h5>{errors.author.message}</h5>}
         </div>
-
-        <div className="form-group">
-          <label>Genre</label>
-          <input
-            type="text"
+        <div>
+          <h3>Genre: </h3>
+          <Controller
+            control={control}
             name="genre"
-            value={formData.genre}
-            onChange={handleChange}
+            render={({ field }) => (
+              <input placeholder="Enter a Genre" {...field} />
+            )}
           />
         </div>
 
-        <div className="form-group">
-          <label>Price</label>
-          <input
-            type="number"
+        <div>
+          <h3>Price: </h3>
+          <Controller
+            control={control}
             name="price"
-            value={formData.price}
-            onChange={handleChange}
+            rules={{
+              required: "Price is required",
+              pattern: {
+                value: /^[0-9]+$/,
+                message: "Price must be a valid number",
+              },
+            }}
+            render={({ field }) => (
+              <input
+                placeholder="Add a Price"
+                {...field}
+                style={{ border: errors.price ? "1px solid red" : "" }}
+              />
+            )}
           />
+          {errors.price && <h5>{errors.price.message}</h5>}
         </div>
-
-        <div className="form-group">
-          <label>Discount Percentage</label>
-          <input
-            type="number"
-            name="discountPercentage"
-            value={formData.discountPercentage}
-            onChange={handleChange}
-          />
-        </div>
-
-        <div className="form-group">
-          <label>Description</label>
-          <input
-            type="text"
-            name="description"
-            value={formData.description}
-            onChange={handleChange}
-          />
-        </div>
-
-        <div className="form-group">
-          <label>Publish Date</label>
-          <input
-            type="text"
-            name="publishDate"
-            placeholder="YYYY-MM-DD"
-            value={formData.publishDate}
-            onChange={handleChange}
-          />
-        </div>
-
-        <div className="form-group">
-          <label>ISBN</label>
-          <input
-            type="text"
-            name="ISBN"
-            value={formData.ISBN}
-            onChange={handleChange}
-          />
-        </div>
-
-        <div className="form-group">
-          <label>Stock</label>
-          <input
-            type="number"
+        <div>
+          <h3>Stock: </h3>
+          <Controller
+            control={control}
             name="stock"
-            value={formData.stock}
-            onChange={handleChange}
+            rules={{
+              required: "stock is required",
+              pattern: {
+                value: /^[0-9]+$/,
+                message: "stock must be a valid number",
+              },
+            }}
+            render={({ field }) => (
+              <input
+                placeholder="Add a stock amount"
+                {...field}
+                style={{ border: errors.stock ? "1px solid red" : "" }}
+              />
+            )}
           />
+          {errors.stock && <h5>{errors.stock.message}</h5>}
         </div>
 
-        <div className="form-group">
-          <button type="submit">Add Book</button>
-        </div>
+        <button type="submit">Submit</button>
       </form>
     </div>
   );

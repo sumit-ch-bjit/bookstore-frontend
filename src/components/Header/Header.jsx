@@ -17,7 +17,7 @@ function Header() {
           <div className="nav-items">
             <ul className="nav-list">
               <li className="nav-item">
-                <Link to="/">Home</Link>
+                <Link to="/home">Home</Link>
               </li>
               <li className="nav-item">
                 <Link to="/bookstore">Books</Link>
@@ -25,11 +25,18 @@ function Header() {
               <li className="nav-item">
                 <Link to="/about">About</Link>
               </li>
-              <li className="nav-item">Contact</li>
+              <li className="nav-item">
+                <Link to="/contact">Contact</Link>
+              </li>
+              <li className="nav-item">
+                <Link to="/sign-up">Sign Up</Link>
+              </li>
+              <li className="nav-item">
+                <Link to="/login">Login</Link>
+              </li>
             </ul>
           </div>
           <div className="logo" onClick={toggleCartModal}>
-            {" "}
             <img src={logo} alt="Your Logo" />
           </div>
           {/* {isCartModalOpen && <CartModal toggleCartModal={toggleCartModal} />} */}

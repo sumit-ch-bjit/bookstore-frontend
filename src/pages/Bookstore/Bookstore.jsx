@@ -1,48 +1,23 @@
 import React, { useState, useEffect } from "react";
 import "./Bookstore.styles.scss";
-import BookList from "../Booklist/BookList";
-import FilterBar from "../FilterBar/FilterBar";
-import AddBookForm from "../AddBookForm/AddBookForm";
-import { useAsyncError } from "react-router-dom";
+import BookList from "../../components/Booklist/BookList";
+import FilterBar from "../../components/FilterBar/FilterBar";
+import AddBookForm from "../../components/AddBookForm/AddBookForm";
+import useBook from "../../hooks/useBooks";
 
 function Bookstore() {
   const [books, setBooks] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [filter, setFilter] = useState("");
+  const { getBook } = useBook();
 
   const itemsPerPage = 5; // You can adjust this based on your API and UI requirements
 
   useEffect(() => {
-    fetch(
-      `http://localhost:3000/api/books?page=${currentPage}&pageSize=${itemsPerPage}`
-    )
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
-        setBooks(data.results);
-        console.log(data.results);
-      })
-      .catch((error) => {
-        console.error("Error fetching data:", error);
-      });
-  }, [currentPage]);
-
-  const handleAddBook = (newBook) => {
-    fetch("http://localhost:3000/api/books", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(newBook),
-    })
-      .then(() => console.log("book added"))
+    getBook(currentPage, itemsPerPage)
+      .then((data) => setBooks(data))
       .catch((error) => console.log(error));
-
-    console.log("Adding book to the database:", newBook);
-
-    // For this example, we'll just update the local state
-    // setBooks((prevBooks) => [...prevBooks, newBook]);
-  };
+  }, [currentPage]);
 
   const filterBooks = (filter) => {
     setFilter(filter);
@@ -70,7 +45,6 @@ function Bookstore() {
         </button>
       </div>
       <br />
-      <AddBookForm onAddBook={handleAddBook} />
     </div>
   );
 }

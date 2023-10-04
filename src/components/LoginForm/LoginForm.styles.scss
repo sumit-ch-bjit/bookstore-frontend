@@ -1,0 +1,59 @@
+// LoginForm.scss
+
+.login-form-container {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  margin-top: 100px;
+
+  .login-form {
+    display: flex;
+    flex-direction: column;
+
+    .form-group {
+      margin-bottom: 15px;
+
+      label {
+        display: block;
+        font-weight: bold;
+        margin-bottom: 5px;
+      }
+
+      input {
+        width: 100%;
+        padding: 8px;
+        font-size: 16px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+      }
+
+      .error-message {
+        color: red;
+        margin-top: 5px;
+        font-size: 14px;
+      }
+    }
+
+    .pass-wrapper {
+      position: relative;
+
+      input {
+        padding-right: 10px;
+      }
+
+      i {
+        position: absolute;
+        top: 40%;
+        right: 8px;
+        transform: translateY(-50%);
+        cursor: pointer;
+      }
+    }
+  }
+}
+
+// Add more styling as needed

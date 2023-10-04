@@ -1,24 +1,21 @@
-/* Header.scss */
-
 .header {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
-  background-color: #007bff; /* Change to your preferred background color */
-  color: #fff; /* Text color for the header items */
-  padding: 10px 0; /* Adjust the padding as needed */
+  background-color: #007bff;
+  color: #fff;
+  padding: 10px 0;
 
   .navbar {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    max-width: 1200px; /* Set a maximum width for the header content */
+    max-width: 1200px;
     margin: 0 auto;
-    padding: 0 20px; /* Add padding to the navbar as needed */
+    padding: 0 20px;
 
     .nav-items {
-      /* Your existing styles for navigation items */
       ul.nav-list {
         list-style-type: none;
         margin: 0;
@@ -26,9 +23,20 @@
         display: flex;
 
         li.nav-item {
-          margin-right: 20px; /* Adjust spacing between navigation items */
-          font-size: 16px; /* Set font size for navigation items */
-          cursor: pointer;
+          margin-right: 20px;
+          font-size: 16px;
+          text-decoration: none;
+
+          a {
+            text-decoration: none;
+            color: #333;
+            font-size: 16px;
+
+            &:hover {
+              color: black;
+              font-weight: bold;
+            }
+          }
         }
       }
     }
@@ -37,8 +45,8 @@
       cursor: pointer;
 
       img {
-        width: 50px; /* Set the logo image size as needed */
-        height: auto; /* Maintain aspect ratio */
+        width: 50px;
+        height: auto;
       }
     }
   }
